@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 from app.api.endpoints import chat
 from app.core.config import settings
 
@@ -20,3 +21,16 @@ app.add_middleware(
 
 # Include routers
 app.include_router(chat.router, prefix="/api/v1")
+
+# Health check endpoint
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=10000,
+        reload=True
+    )
