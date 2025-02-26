@@ -28,9 +28,13 @@ async def health_check():
     return {"status": "healthy"}
 
 if __name__ == "__main__":
+    import uvicorn
+
+    # Use the PORT environment variable
+    port = int(os.getenv("PORT", 10000))  # Default to 10000 if PORT is not set
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=10000,
+        port=port,
         reload=True
     )
