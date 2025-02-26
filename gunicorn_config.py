@@ -1,9 +1,15 @@
-"""Gunicorn config file"""
+# Import required modules
+import os
+import multiprocessing
 
-# Core Settings
+# Binding
 bind = f"0.0.0.0:{os.getenv('PORT', '10000')}"
-workers = 4
+
+# Worker Settings
+workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = "uvicorn.workers.UvicornWorker"
+worker_connections = 1000
+timeout = 120
 keepalive = 120
 
 # Logging
@@ -15,5 +21,13 @@ loglevel = "info"
 proc_name = "AMC_Chatbot_API"
 
 # SSL (if needed)
-# keyfile = "/etc/ssl/private/key.pem"
-# certfile = "/etc/ssl/certs/cert.pem"
+# keyfile = "/path/to/keyfile"
+# certfile = "/path/to/certfile"
+
+# Server Mechanics
+preload_app = True
+reload = False  # Set to True for development
+
+# Debugging
+capture_output = True
+enable_stdio_inheritance = True
