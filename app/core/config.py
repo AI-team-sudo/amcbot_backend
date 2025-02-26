@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from typing import List
+import os
 
 class Settings(BaseSettings):
     # API Configuration
@@ -20,8 +21,7 @@ class Settings(BaseSettings):
     TEMPERATURE: float = 0.7
 
     # Pinecone Configuration
-    PINECONE_API_KEY: str
-    PINECONE_ENVIRONMENT: str
+    PINECONE_API_KEY: str = os.getenv("PINECONE_API_KEY")
 
     # Namespace Configuration
     NAMESPACE_MAP: dict = {
